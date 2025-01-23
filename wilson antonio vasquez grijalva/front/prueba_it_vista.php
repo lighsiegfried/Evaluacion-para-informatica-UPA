@@ -44,6 +44,7 @@ class prueba_it_vista{
         <?php
     } 
 
+
     function formulario()
     {
     ?>  
@@ -116,7 +117,7 @@ class prueba_it_vista{
 
             //evita numeros y simbolos en el input de usuario
             $(document).on('input', '#name_user', function () {
-                $(this).val($(this).val().replace(/[^A-Za-z]/g, ''));
+                $(this).val($(this).val().replace(/[^A-Za-z\s]/g, ''));
             });
 
             $(document).on('input', '#tel', function () {
@@ -165,7 +166,9 @@ class prueba_it_vista{
         </script>
     <?php
     } 
-    
+
+
+
     function boton_atras()
     {
         ?>

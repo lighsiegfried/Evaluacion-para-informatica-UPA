@@ -1,7 +1,4 @@
 <?php
-
-//manejar visualizacion por medio de controles, mayor versatilidad al intercambiar bloques de vistas.
-//se uso php por facilidad y sin instalar tantas librerias
 require_once('prueba_it_vista.php');
 $vista=new prueba_it_vista();
 
@@ -17,6 +14,7 @@ if(isset($_POST['accion'])){
             case 'formulario':
                 $vista->formulario();
             break;
+
 
         default:
             $respuesta=[];

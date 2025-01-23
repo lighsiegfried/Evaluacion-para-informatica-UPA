@@ -35,3 +35,8 @@ values ("Activo","activo");
 
 insert into EstadoUsuario (titulo,clave) 
 values ("Baja Permanente","baja");
+
+
+
+
+
