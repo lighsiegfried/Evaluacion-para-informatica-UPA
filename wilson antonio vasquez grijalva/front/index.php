@@ -20,5 +20,7 @@
     <div class="mt-4"></div>
 
         <div id="inicio" ></div>
-
+        <div class="mt-4"></div>
+        <div id="formulario" ></div>
+        <div class="mt-4"></div>
 </body>

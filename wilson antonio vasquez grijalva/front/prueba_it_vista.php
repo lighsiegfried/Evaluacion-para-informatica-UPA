@@ -44,7 +44,128 @@ class prueba_it_vista{
         <?php
     } 
 
+    function formulario()
+    {
+    ?>  
+        <div id="seccion_formulario"> 
+            <div class="text-center"> <h2>FORMULARIO</h2> </div>
+            <form id="formulario_consulta" method="post">
+                <div class="mx-5"> 
+                    <div class="card shadow">
+                        <div class="d-flex justify-content-between card-header ">
+                            <h5><i class="bi bi-clipboard-data" style="font-size: 1.7rem;"></i>Formulario  </h5> <div >  <?php $this->boton_atras(); ?></div>
+                        </div>
+                        <div class="card-body">
+                            <div class="justify-content-center">
+                                <div class="col-md-auto">
+                                    <div class="d-flex justify-content-start mt-3">
+                                        <div class="col-3 text-right" title="USER">
+                                            Nombre de usuario:
+                                        </div>
+                                        <div class="col" title="USER">
+                                            <input class="form-control form-control-sm" pattern="[A-Za-z]+" title="Por favor, ingresa solo letras." name="name_user" id="name_user" type="text" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mt-3">
+                                        <div class="col-3 text-right" title="NACIMIENTO">
+                                            Fecha de nacimiento:
+                                        </div>
+                                        <div class="col" title="NACIMIENTO">
+                                            <input class="form-control form-control-sm" name="fec" id="fec" type="date" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mt-3">
+                                        <div class="col-3 text-right" title="EDAD">
+                                            Edad:
+                                        </div>
+                                        <div class="col" title="EDAD">
+                                            <input class="form-control form-control-sm" name="edad" id="edad" type="number" disabled value="0">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mt-3" title="TELEFONO">
+                                        <div class="col-3 text-right">
+                                            Numero de telefono:
+                                        </div>
+                                        <div class="col" title="TELEFONO">
+                                            <input class="form-control form-control-sm" name="tel" id="tel" type="number" step="any" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mt-3" title="E-MAIL">
+                                        <div class="col-3 text-right">
+                                            Correo:
+                                        </div>
+                                        <div class="col" title="E-MAIL">
+                                            <input class="form-control form-control-sm" name="mail" id="mail" type="email" placeholder="ejemplo@mail.com" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <button id="capturar" type="submit" class="btn btn-primary">
+                                <i class="material-icons">search</i> Buscar
+                            </button>  
+                        </div>
+                        <div class="mt-3"></div>    
+                    </div>
+                </div>
+            </form>
+        </div>
+        <script>
+            //funcion especial para esta vista...
 
+            //evita numeros y simbolos en el input de usuario
+            $(document).on('input', '#name_user', function () {
+                $(this).val($(this).val().replace(/[^A-Za-z]/g, ''));
+            });
+
+            $(document).on('input', '#tel', function () {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+            });
+
+            //valida el correo
+            document.getElementById('mail').addEventListener('input', function() {
+                const email = this.value;
+                const cambio = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                if (!cambio.test(email)) {
+                this.setCustomValidity('Por favor, ingrese un correo electrónico válido.');
+                } else {
+                this.setCustomValidity('');
+                }
+            });
+
+            $('#formulario_consulta').on('submit', function(event) {
+                event.preventDefault(); 
+                var dataSerializada = $(this).serializeArray(); // lo convierte a un array
+                localStorage.setItem('dataSerial', JSON.stringify(dataSerializada)); //serializo y envio la variable al js principal, no es la mejor pero la mas optima para este ejercicio.
+                //limpia eventos guardados previamente
+                if (window.processAndClearStorage) {
+                    window.processAndClearStorage();
+                }
+
+            });
+
+            //calculo de edad
+            function calcularEdad(fechaNacimiento) {
+                var fechaNach = new Date(fechaNacimiento);
+                var hoy = new Date();
+                var edad = hoy.getFullYear() - fechaNach.getFullYear();
+                return edad; 
+            }
+
+            
+            document.addEventListener("change", function (event) {
+                if (event.target && event.target.id === "fec") {
+                    var fechaSeleccionada = event.target.value;
+                    var edad = calcularEdad(fechaSeleccionada);
+                    $("#edad").val(edad);
+                }
+            });
+
+        </script>
+    <?php
+    } 
+    
     function boton_atras()
     {
         ?>

@@ -14,6 +14,10 @@ if(isset($_POST['accion'])){
                 $vista->inicio();
             break;
 
+            case 'formulario':
+                $vista->formulario();
+            break;
+
         default:
             $respuesta=[];
             $respuesta['estado']=0;
