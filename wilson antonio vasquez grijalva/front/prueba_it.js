@@ -19,6 +19,18 @@ $(document).ready(function() {
             get_reporte();  
         });
 
+        $(this).on('click', '#reporte_general', function(){
+            cargarReporte();
+        });
+
+        $(this).on('click', '#reporte_creados_hoy', function(){
+            cargarHoy();
+        });
+
+        $(this).on('click', '#reporte_creados_ayer', function(){
+            cargarAyer();
+        });
+
         // procesa, limpiar y envia
         window.processAndClearStorage = async function () {
             dataSerial = JSON.parse(localStorage.getItem('dataSerial'));
@@ -63,7 +75,101 @@ $(document).ready(function() {
                     alert(error.message);
                   }
         };
-    
+
+        function cargarReporte(){
+            let url;
+            url = 'http://localhost:3000/ejecutar_reporte/';
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error al obtener los datos: ${response.statusText}`);
+                    }
+                    return response.json(); // Convierte la respuesta a JSON
+                })
+                .then(data => {
+                    //traspasar data en json
+                    data.data = data.data.map(item => ({ 
+                        ...item, 
+                        creacion: new Date(item.creacion).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }), 
+                        fecha: new Date(item.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) 
+                    }));
+                    
+                    console.log("data reporte: ",data.data);
+                    get_reporte_general(data.data);
+                })
+                .catch(error => {
+                    console.error("Error al cargar el reporte:", error);
+                    alert("Ocurrió un error al cargar el reporte. Revisa la consola para más detalles.");
+                });
+        }
+
+        function cargarHoy(){
+            let url;
+            url = 'http://localhost:3000/ejecutar_reporte/';
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error al obtener los datos: ${response.statusText}`);
+                    }
+                    return response.json(); // Convierte la respuesta a JSON
+                })
+                .then(data => {
+                    //traspasar data en json
+                    data.data = data.data.map(item => ({ 
+                        ...item, 
+                        creacion: new Date(item.creacion).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }), 
+                        fecha: new Date(item.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) 
+                    }));
+
+                    const hoy = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+                    // filtrar solo los elementos creados hoy, desde el front
+                    data.data = data.data.filter(item => item.creacion === hoy);
+                    
+                    console.log("data reporte: ",data.data);
+                    get_reporte_hoy(data.data);
+                })
+                .catch(error => {
+                    console.error("Error al cargar el reporte:", error);
+                    alert("Ocurrió un error al cargar el reporte. Revisa la consola para más detalles.");
+                });
+        }
+
+
+        function cargarAyer(){
+            let url;
+            url = 'http://localhost:3000/ejecutar_reporte/';
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error al obtener los datos: ${response.statusText}`);
+                    }
+                    return response.json(); // Convierte la respuesta a JSON
+                })
+                .then(data => {
+                    //traspasar data en json
+                    data.data = data.data.map(item => ({ 
+                        ...item, 
+                        creacion: new Date(item.creacion).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }), 
+                        fecha: new Date(item.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }) 
+                    }));
+
+                    const hoy = new Date();
+                    hoy.setDate(hoy.getDate() -1); //resto un dia para general el dia despues o ayer, siempre
+                    const diaAnterior = hoy.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+                    // filtrar solo los elementos creados hoy, desde el front
+                    data.data = data.data.filter(item => item.creacion === diaAnterior);
+
+                    console.log("data reporte: ",data.data);
+                    get_reporte_ayer(data.data);
+                })
+                .catch(error => {
+                    console.error("Error al cargar el reporte:", error);
+                    alert("Ocurrió un error al cargar el reporte. Revisa la consola para más detalles.");
+                });
+        }
+     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------
     //Acciones
 
@@ -101,6 +207,39 @@ $(document).ready(function() {
             $('#reporte').html(set_spinner);
             $.ajax({ async: true, type: 'post', url: 'prueba_it_controlador.php', data: {
                 accion: 'reporte',
+            }, success: function (data) {
+                $('#reporte').html(data);
+            }, error: function (request, status, error) { console.log('error en peticion'); } , timeout: 30*60*1000/*ESPERAR 30 MINUTOS*/ });
+        };
+
+        function get_reporte_general(data){
+            get_limpiar();
+            $('#reporte').html(set_spinner);
+            $.ajax({ async: true, type: 'post', url: 'prueba_it_controlador.php', data: {
+                accion: 'reporte_general',
+                data
+            }, success: function (data) {
+                $('#reporte').html(data);
+            }, error: function (request, status, error) { console.log('error en peticion'); } , timeout: 30*60*1000/*ESPERAR 30 MINUTOS*/ });
+        };
+
+        function get_reporte_hoy(data){
+            get_limpiar();
+            $('#reporte').html(set_spinner);
+            $.ajax({ async: true, type: 'post', url: 'prueba_it_controlador.php', data: {
+                accion: 'reporte_creados_hoy',
+                data
+            }, success: function (data) {
+                $('#reporte').html(data);
+            }, error: function (request, status, error) { console.log('error en peticion'); } , timeout: 30*60*1000/*ESPERAR 30 MINUTOS*/ });
+        };
+
+        function get_reporte_ayer(data){
+            get_limpiar();
+            $('#reporte').html(set_spinner);
+            $.ajax({ async: true, type: 'post', url: 'prueba_it_controlador.php', data: {
+                accion: 'reporte_creados_ayer',
+                data
             }, success: function (data) {
                 $('#reporte').html(data);
             }, error: function (request, status, error) { console.log('error en peticion'); } , timeout: 30*60*1000/*ESPERAR 30 MINUTOS*/ });

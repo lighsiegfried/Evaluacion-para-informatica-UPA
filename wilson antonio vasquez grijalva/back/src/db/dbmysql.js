@@ -76,7 +76,15 @@ async function insertar(tabla, data) {
 
 function todos(tabla){
   return new Promise ( (resolve, reject) => {
-    connection_plano.query(`select * from ${tabla} order by id desc`, (error,resultado) => {
+    connection_plano.query(`
+      select id,nombre,telefono,correo,fecha,creacion,EstadoUsuarioId,titulo,clave from 
+      (
+        select id,nombre,telefono,correo,fecha,creacion,EstadoUsuarioId from ${tabla}
+      ) t1 left join
+      (
+        select id as id_est,titulo,clave from EstadoUsuario
+      ) t2 on t1.EstadoUsuarioId = t2. id_est
+      order by id desc `, (error,resultado) => {
         return error ? reject(error): resolve(resultado);
     }); 
   });

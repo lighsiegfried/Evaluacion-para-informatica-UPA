@@ -64,7 +64,7 @@ class prueba_it_vista{
                                             Nombre de usuario:
                                         </div>
                                         <div class="col" title="USER">
-                                            <input class="form-control form-control-sm" pattern="[A-Za-z]+" title="Por favor, ingresa solo letras." name="name_user" id="name_user" type="text" required>
+                                            <input class="form-control form-control-sm" pattern="[A-Za-z\s]+" title="Por favor, ingresa solo letras y espacios." name="name_user" id="name_user" type="text" required>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-start mt-3">
@@ -167,7 +167,403 @@ class prueba_it_vista{
     <?php
     } 
 
+    function reporte()
+    {
+    ?>
+        <div id="seccion_reporte">
+            <div class="text-center"> <h2>REPORTE</h2> </div>
+            <div class="mt-3"></div>
+            <form id="reportes" method="post">
+                <div class="d-inline-flex p-2 bd-highlight"> 
+                    <div class="col-md-auto">
+                        <div class="card shadow">
+                            <div class="card-header d-flex d-flex justify-content-between" >
+                                <h5><i class="bi bi-clipboard-data" style="font-size: 1.7rem;"></i>Reporte </h5> <div >  <?php $this->boton_atras(); ?></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row justify-content-md-center">
+                                    <div class="col-md-auto">
+                                        <div class="table-responsive">
+                                            
+                                            <div class="mt-3"></div> 
+                                                <button id="reporte_general" type="button" class="btn btn-outline-success ">Reporte de todos los usuarios</button>
+                                            <div class="mt-3"></div>
+                                                <button id="reporte_creados_hoy" type="button" class="btn btn-outline-info ">Reporte creados hoy</button>
+                                            <div class="mt-3"></div>
+                                                <button id="reporte_creados_ayer" type="button" class="btn btn-outline-secondary ">Reporte creados ayer</button>
+                                            <div class="mt-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <?php
+    } 
 
+
+    function reporte_general($data)
+    { 
+        if ($data){
+            ?>     
+            <style>
+                .form-check-input 
+                {
+                    scale: 2; 
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    box-shadow: none;
+                }
+                .enlace-especifico {
+                    outline: none;
+                    text-decoration: none;
+                    padding: 2px 1px 0;
+                }
+
+                .enlace-especifico:visited {
+                    color: #288df7; 
+                }
+
+                .enlace-especifico:focus {
+                    border-bottom: 1px solid;
+                    background: #d4abb0;
+                }
+
+                .enlace-especifico:hover {
+                    border-bottom: 1px solid;
+                    background: #d4abb0;
+                }
+
+                .enlace-especifico:active {
+                    background: #7d0211;
+                    color: #d4abb0;
+                }
+                .fox { 
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                }
+                .fox2 { 
+                    box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2);
+                }
+            </style>
+            <div class="mt-5 "></div>
+            <div class="d-inline-flex p-2 bd-highlight"> 
+                    <div class="d-flex justify-content-start">
+                        <div class="col-md-auto">
+                            <div class="card shadow">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h5><i class="bi bi-clipboard-check" style="font-size: 1.7rem;"></i> Reporte de todos los usuarios</h5> <?php $this->boton_atras(); ?>
+                                </div>
+                                <div class="card-body">
+                                    <?php
+                                    if ($data) {
+                                        ?>
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-auto">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-hover text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Telefono</th>
+                                                                <th scope="col">Correo</th> 
+                                                                <th scope="col">Fecha</th>
+                                                                <th scope="col">Creacion</th>
+                                                                <th scope="col">EstadoUsuarioId</th>
+                                                                <th scope="col">Titulo</th>
+                                                                <th scope="col">Clave</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            foreach ($data as $key => $dato) { 
+                                                                ?>
+                                                                <tr>
+                                                                    <td><?php echo $dato['id']; ?></td>
+                                                                    <td><?php echo $dato['nombre']; ?></td>
+                                                                    <td><?php echo $dato['telefono']; ?></td>
+                                                                    <td><?php echo $dato['correo']; ?></td>
+                                                                    <td><?php echo $dato['fecha']; ?></td>
+                                                                    <td><?php echo $dato['creacion']; ?></td>
+                                                                    <td><?php echo $dato['EstadoUsuarioId']; ?></td>
+                                                                    <td><?php echo $dato['titulo']; ?> </td>
+                                                                    <td><?php echo $dato['clave']; ?></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-auto">
+                                                <div class="alert alert-warning shadow" role="alert">
+                                                    Sin usuarios ingresados
+                                                </div>
+                                            </div>
+                                        </div>  <div class="mt-3"></div>
+                                        
+                                        <?php
+                                    }  ?>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+            </div>
+          <?php
+        }
+    }
+
+    function reporte_creados_hoy($data)
+    { 
+        if ($data){
+            ?>     
+            <style>
+                .form-check-input 
+                {
+                    scale: 2; 
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    box-shadow: none;
+                }
+                .enlace-especifico {
+                    outline: none;
+                    text-decoration: none;
+                    padding: 2px 1px 0;
+                }
+
+                .enlace-especifico:visited {
+                    color: #288df7; 
+                }
+
+                .enlace-especifico:focus {
+                    border-bottom: 1px solid;
+                    background: #d4abb0;
+                }
+
+                .enlace-especifico:hover {
+                    border-bottom: 1px solid;
+                    background: #d4abb0;
+                }
+
+                .enlace-especifico:active {
+                    background: #7d0211;
+                    color: #d4abb0;
+                }
+                .fox { 
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                }
+                .fox2 { 
+                    box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2);
+                }
+            </style>
+            <div class="mt-5 "></div>
+            <div class="d-inline-flex p-2 bd-highlight"> 
+                    <div class="d-flex justify-content-start">
+                        <div class="col-md-auto">
+                            <div class="card shadow">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h5><i class="bi bi-clipboard-check" style="font-size: 1.7rem;"></i> Reporte de todos los usuarios <b>CREADOS HOY</b></h5> <?php $this->boton_atras(); ?>
+                                </div>
+                                <div class="card-body">
+                                    <?php
+                                    if ($data) {
+                                        ?>
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-auto">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-hover text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Telefono</th>
+                                                                <th scope="col">Correo</th> 
+                                                                <th scope="col">Fecha</th>
+                                                                <th scope="col">Creacion</th>
+                                                                <th scope="col">EstadoUsuarioId</th>
+                                                                <th scope="col">Titulo</th>
+                                                                <th scope="col">Clave</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            foreach ($data as $key => $dato) { 
+                                                                ?>
+                                                                <tr>
+                                                                    <td><?php echo $dato['id']; ?></td>
+                                                                    <td><?php echo $dato['nombre']; ?></td>
+                                                                    <td><?php echo $dato['telefono']; ?></td>
+                                                                    <td><?php echo $dato['correo']; ?></td>
+                                                                    <td><?php echo $dato['fecha']; ?></td>
+                                                                    <td><b><?php echo $dato['creacion']; ?></b></td>
+                                                                    <td><?php echo $dato['EstadoUsuarioId']; ?></td>
+                                                                    <td><?php echo $dato['titulo']; ?> </td>
+                                                                    <td><?php echo $dato['clave']; ?></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-auto">
+                                                <div class="alert alert-warning shadow" role="alert">
+                                                    Sin usuarios ingresados
+                                                </div>
+                                            </div>
+                                        </div>  <div class="mt-3"></div>
+                                        
+                                        <?php
+                                    }  ?>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+            </div>
+          <?php
+        }
+    }
+
+    function reporte_creados_ayer($data)
+    { 
+        if ($data){
+            ?>     
+            <style>
+                .form-check-input 
+                {
+                    scale: 2; 
+                    margin-top: 10px;
+                    margin-left: 0px;
+                    margin-right: 0px;
+                    box-shadow: none;
+                }
+                .enlace-especifico {
+                    outline: none;
+                    text-decoration: none;
+                    padding: 2px 1px 0;
+                }
+
+                .enlace-especifico:visited {
+                    color: #288df7; 
+                }
+
+                .enlace-especifico:focus {
+                    border-bottom: 1px solid;
+                    background: #d4abb0;
+                }
+
+                .enlace-especifico:hover {
+                    border-bottom: 1px solid;
+                    background: #d4abb0;
+                }
+
+                .enlace-especifico:active {
+                    background: #7d0211;
+                    color: #d4abb0;
+                }
+                .fox { 
+                    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                }
+                .fox2 { 
+                    box-shadow: 7px 7px 5px rgba(0, 0, 0, 0.2);
+                }
+            </style>
+            <div class="mt-5 "></div>
+            <div class="d-inline-flex p-2 bd-highlight"> 
+                    <div class="d-flex justify-content-start">
+                        <div class="col-md-auto">
+                            <div class="card shadow">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h5><i class="bi bi-clipboard-check" style="font-size: 1.7rem;"></i> Reporte de todos los usuarios <b>CREADOS AYER</b></h5> <?php $this->boton_atras(); ?>
+                                </div>
+                                <div class="card-body">
+                                    <?php
+                                    if ($data) {
+                                        ?>
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-auto">
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm table-hover text-center">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">ID</th>
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Telefono</th>
+                                                                <th scope="col">Correo</th> 
+                                                                <th scope="col">Fecha</th>
+                                                                <th scope="col">Creacion</th>
+                                                                <th scope="col">EstadoUsuarioId</th>
+                                                                <th scope="col">Titulo</th>
+                                                                <th scope="col">Clave</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            foreach ($data as $key => $dato) { 
+                                                                ?>
+                                                                <tr>
+                                                                    <td><?php echo $dato['id']; ?></td>
+                                                                    <td><?php echo $dato['nombre']; ?></td>
+                                                                    <td><?php echo $dato['telefono']; ?></td>
+                                                                    <td><?php echo $dato['correo']; ?></td>
+                                                                    <td><?php echo $dato['fecha']; ?></td>
+                                                                    <td><b><?php echo $dato['creacion']; ?></b></td>
+                                                                    <td><?php echo $dato['EstadoUsuarioId']; ?></td>
+                                                                    <td><?php echo $dato['titulo']; ?> </td>
+                                                                    <td><?php echo $dato['clave']; ?></td>
+                                                                </tr>
+                                                                <?php
+                                                            }
+                                                            ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-md-auto">
+                                                <div class="alert alert-warning shadow" role="alert">
+                                                    Sin usuarios ingresados
+                                                </div>
+                                            </div>
+                                        </div>  <div class="mt-3"></div>
+                                        
+                                        <?php
+                                    }  ?>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <br>
+            </div>
+          <?php
+        }
+    }
 
     function boton_atras()
     {

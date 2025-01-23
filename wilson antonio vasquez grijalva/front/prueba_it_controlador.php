@@ -4,7 +4,8 @@ $vista=new prueba_it_vista();
 
 if(isset($_POST['accion'])){
     $accion=$_POST['accion'];
-    switch($accion){ 
+    switch($accion){
+         
             //seccion que despliega las vistas por bloques interactivos
 
             case 'inicio':
@@ -15,6 +16,24 @@ if(isset($_POST['accion'])){
                 $vista->formulario();
             break;
 
+            case 'reporte':
+                $vista->reporte();
+            break;
+
+            case 'reporte_general':
+                $data  = $_POST['data'];
+                $vista->reporte_general($data);
+            break;
+
+            case 'reporte_creados_hoy':
+                $data  = $_POST['data'];
+                $vista->reporte_creados_hoy($data);
+            break;
+
+            case 'reporte_creados_ayer':
+                $data  = $_POST['data'];
+                $vista->reporte_creados_ayer($data);
+            break;
 
         default:
             $respuesta=[];
