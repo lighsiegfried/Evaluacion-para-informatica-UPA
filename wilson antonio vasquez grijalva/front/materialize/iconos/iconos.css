@@ -1,0 +1,86 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(MaterialIcons-Regular.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+        local('MaterialIcons-Regular'),
+        url(MaterialIcons-Regular.woff2) format('woff2'),
+        url(MaterialIcons-Regular.woff) format('woff'),
+        url(MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+            font-size: 21px;
+/*    font-size: 1.5rem;*/
+    /*    PARA ALINEAR CONEL TEXTO*/
+    /*    vertical-align: bottom;*/
+    vertical-align: middle;
+    /* Preferred icon size */
+    display: inline-block;
+    /*        line-height: 0;*/
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+/*    font-size: 23px;*/
+/*    font-size: 21px;*/
+/*    font-size: 19px;*/
+/*    font-size: 17px;*/
+/*
+.btn-lg i.material-icons {
+font-size: 6rem;
+}
+.btn-md i.material-icons {
+font-size: 4rem;
+}
+.btn-sm i.material-icons {
+font-size: 2rem;
+}
+i.material-icons.xs {
+font-size: 1rem;
+}
+*/
+
+/*.tiny.material-icons, i.material-icons.xs{*/
+.tiny.material-icons{
+    font-size: 1rem;
+}
+/*.small.material-icons, .btn-sm i.material-icons{*/
+.small.material-icons{
+    font-size: 2rem;
+}
+/*.medium.material-icons, .btn-md i.material-icons{*/
+.medium.material-icons{
+    font-size: 3rem;
+}
+/*.large.material-icons, .btn-lg i.material-icons{*/
+.large.material-icons{
+    font-size: 4rem;
+}
+.big.material-icons{
+    font-size: 5rem;
+}
+
+/*COLOR AGREGADO 202202160930, PARA INDICAR QUE OCURRIO UN INCIDENTE CON ALGUN CODIGO DE BARRAS/BULTO*/
+.color-purpura{
+    background-color: #8E44AD;
+    color: white;
+}
