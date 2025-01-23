@@ -58,9 +58,22 @@ async function agregar(body) {
     const resultado = await db.insertar(tabla, usuario);
 
     return { id: resultado.insertId };
-  }
+}
 
+function todos(body){
+  return db.todos(tabla,body);
+}
+
+async function uno(id) {
+  const resultado = await db.uno(tabla, id);
+  if (!resultado) {
+    throw new Error(`No se encontró un registro con el ID: ${id}`);
+  }
+  return resultado; // retorna todo
+}
 
 module.exports = {
     agregar,
+    todos,
+    uno
 };

@@ -2,13 +2,13 @@ const { Router } = require('express');
 const router = Router();
 const respuesta  = require("../red/respuestas.js"); //control respuestas
 const controlador = require("./controlador.js"); //control consultas internas sql
-const error = require('../red/errors.js')
-
-
+const error = require('../red/errors.js');
 
 /* --------------- END POINTs PRUEBA ----------------- */
         /* --------------- inicia modulo --------------- */
   router.post("/guardar_usuario", agregar);
+  router.get("/ejecutar_reporte/:id", uno); //consulta 1 , el id 
+  router.get("/ejecutar_reporte", todos);   //consulta todos
   router.use(error);
 
 
@@ -22,6 +22,25 @@ const error = require('../red/errors.js')
     } catch (err) {
       next(err);
     }
+  };
+
+  async function todos (req, res, next) {
+    //res.json({message: "port 3000 desplegadoo!!!"})
+    try {
+      const items = await controlador.todos();
+      respuesta.success(req,res, items , 200);
+    } catch (err){
+      next(err);
+    }
+  };
+
+  async function uno (req, res, next) {
+    try {
+        const items = await controlador.uno(req.params.id);
+        respuesta.success(req,res, items , 200);
+      } catch (err){
+        next(err);
+      }
   };
 
 /* --------------- END POINTs PRUEBA ----------------- */

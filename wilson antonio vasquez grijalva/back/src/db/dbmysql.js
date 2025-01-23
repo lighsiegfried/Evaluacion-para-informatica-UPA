@@ -74,11 +74,38 @@ async function insertar(tabla, data) {
   }
 }
 
+function todos(tabla){
+  return new Promise ( (resolve, reject) => {
+    connection_plano.query(`select * from ${tabla} order by id desc`, (error,resultado) => {
+        return error ? reject(error): resolve(resultado);
+    }); 
+  });
+}
+
+function uno(tabla, id) { //consulta de datos para obtener fecha y pasarla a fecha_modificacion para la nueva version ingresada.
+  return new Promise((resolve, reject) => {
+    connection_plano.query(`select * from ${tabla} where id='${id}' `, (error,resultado) => {
+      if (error) {
+        reject(error);
+      } else {
+        if (resultado.length > 0) {
+          resolve(resultado[0]);
+        } else {
+          resolve(null);
+        }
+      }
+    });
+  });
+}
+
+
 
 /* ----------------- Funciones para planos fin modulo ----------------- */ 
   
   module.exports = { 
     createConnection_plano,
     closeConnection_plano,
-    insertar
+    insertar,
+    uno,
+    todos,
   };
